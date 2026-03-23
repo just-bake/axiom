@@ -1,1 +1,336 @@
-
+{
+    "version": 5,
+    "configurePresets": [
+        {
+            "name": "default",
+            "description": "Default configuration",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "full-debug",
+            "displayName": "Full Debug (All Components)",
+            "description": "Build all components in debug mode with validation and profiling",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build/full-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "AXIOM_BUILD_ENGINE": "ON",
+                "AXIOM_BUILD_EDITOR": "ON",
+                "AXIOM_BUILD_LAUNCHER": "ON",
+                "AXIOM_BUILD_RUNTIME": "ON",
+                "AXIOM_BUILD_EXAMPLES": "ON",
+                "AXIOM_BUILD_TESTS": "ON",
+                "AXIOM_BUILD_WINDOW_MODULE": "ON",
+                "AXIOM_BUILD_RENDERING_MODULE": "OFF",
+                "AXIOM_BUILD_AUDIO_MODULE": "OFF",
+                "AXIOM_BUILD_PHYSICS_MODULE": "OFF",
+                "AXIOM_BUILD_SCRIPTING_MODULE": "OFF",
+                "AXIOM_WINDOW_BACKEND_GLFW": "ON",
+                "AXIOM_WINDOW_BACKEND_SDL2": "OFF",
+                "AXIOM_GRAPHICS_OPENGL": "ON",
+                "AXIOM_GRAPHICS_VULKAN": "OFF",
+                "AXIOM_GRAPHICS_DIRECTX12": "OFF",
+                "AXIOM_GRAPHICS_METAL": "OFF",
+                "AXIOM_ENABLE_PROFILING": "ON",
+                "AXIOM_ENABLE_VALIDATION": "ON",
+                "AXIOM_ENABLE_HOTRELOAD": "ON",
+                "AXIOM_ENABLE_LOGGING": "ON"
+            }
+        },
+        {
+            "name": "full-release",
+            "displayName": "Full Release (All Components)",
+            "description": "Build all components in release mode optimized for performance",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build/full-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "AXIOM_BUILD_ENGINE": "ON",
+                "AXIOM_BUILD_EDITOR": "ON",
+                "AXIOM_BUILD_LAUNCHER": "ON",
+                "AXIOM_BUILD_RUNTIME": "ON",
+                "AXIOM_BUILD_EXAMPLES": "ON",
+                "AXIOM_BUILD_TESTS": "ON",
+                "AXIOM_BUILD_WINDOW_MODULE": "ON",
+                "AXIOM_BUILD_RENDERING_MODULE": "OFF",
+                "AXIOM_BUILD_AUDIO_MODULE": "OFF",
+                "AXIOM_BUILD_PHYSICS_MODULE": "OFF",
+                "AXIOM_BUILD_SCRIPTING_MODULE": "OFF",
+                "AXIOM_WINDOW_BACKEND_GLFW": "ON",
+                "AXIOM_WINDOW_BACKEND_SDL2": "OFF",
+                "AXIOM_GRAPHICS_OPENGL": "ON",
+                "AXIOM_GRAPHICS_VULKAN": "OFF",
+                "AXIOM_GRAPHICS_DIRECTX12": "OFF",
+                "AXIOM_GRAPHICS_METAL": "OFF",
+                "AXIOM_ENABLE_PROFILING": "OFF",
+                "AXIOM_ENABLE_VALIDATION": "OFF",
+                "AXIOM_ENABLE_HOTRELOAD": "OFF",
+                "AXIOM_ENABLE_LOGGING": "ON"
+            }
+        },
+        {
+            "name": "editor-only-debug",
+            "displayName": "Editor Only (Debug)",
+            "description": "Build only the editor with dependencies in debug mode",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build/editor-only-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "AXIOM_BUILD_ENGINE": "ON",
+                "AXIOM_BUILD_EDITOR": "ON",
+                "AXIOM_BUILD_LAUNCHER": "ON",
+                "AXIOM_BUILD_RUNTIME": "OFF",
+                "AXIOM_BUILD_EXAMPLES": "OFF",
+                "AXIOM_BUILD_TESTS": "OFF",
+                "AXIOM_BUILD_WINDOW_MODULE": "ON",
+                "AXIOM_BUILD_RENDERING_MODULE": "OFF",
+                "AXIOM_BUILD_AUDIO_MODULE": "OFF",
+                "AXIOM_BUILD_PHYSICS_MODULE": "OFF",
+                "AXIOM_BUILD_SCRIPTING_MODULE": "OFF",
+                "AXIOM_WINDOW_BACKEND_GLFW": "ON",
+                "AXIOM_ENABLE_PROFILING": "ON",
+                "AXIOM_ENABLE_VALIDATION": "ON",
+                "AXIOM_ENABLE_HOTRELOAD": "ON",
+                "AXIOM_ENABLE_LOGGING": "ON"
+            }
+        },
+        {
+            "name": "editor-only-release",
+            "displayName": "Editor Only (Release)",
+            "description": "Build only the editor with dependencies in release mode",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build/editor-only-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "AXIOM_BUILD_ENGINE": "ON",
+                "AXIOM_BUILD_EDITOR": "ON",
+                "AXIOM_BUILD_LAUNCHER": "ON",
+                "AXIOM_BUILD_RUNTIME": "OFF",
+                "AXIOM_BUILD_EXAMPLES": "OFF",
+                "AXIOM_BUILD_TESTS": "OFF",
+                "AXIOM_BUILD_WINDOW_MODULE": "ON",
+                "AXIOM_BUILD_RENDERING_MODULE": "OFF",
+                "AXIOM_BUILD_AUDIO_MODULE": "OFF",
+                "AXIOM_BUILD_PHYSICS_MODULE": "OFF",
+                "AXIOM_BUILD_SCRIPTING_MODULE": "OFF",
+                "AXIOM_WINDOW_BACKEND_GLFW": "ON",
+                "AXIOM_ENABLE_PROFILING": "OFF",
+                "AXIOM_ENABLE_VALIDATION": "OFF",
+                "AXIOM_ENABLE_HOTRELOAD": "ON",
+                "AXIOM_ENABLE_LOGGING": "ON"
+            }
+        },
+        {
+            "name": "engine-only-debug",
+            "displayName": "Engine Only (Debug)",
+            "description": "Build only the engine core in debug mode",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build/engine-only-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "AXIOM_BUILD_ENGINE": "ON",
+                "AXIOM_BUILD_EDITOR": "OFF",
+                "AXIOM_BUILD_LAUNCHER": "OFF",
+                "AXIOM_BUILD_RUNTIME": "OFF",
+                "AXIOM_BUILD_EXAMPLES": "OFF",
+                "AXIOM_BUILD_TESTS": "ON",
+                "AXIOM_BUILD_WINDOW_MODULE": "OFF",
+                "AXIOM_BUILD_RENDERING_MODULE": "OFF",
+                "AXIOM_BUILD_AUDIO_MODULE": "OFF",
+                "AXIOM_BUILD_PHYSICS_MODULE": "OFF",
+                "AXIOM_BUILD_SCRIPTING_MODULE": "OFF",
+                "AXIOM_ENABLE_PROFILING": "ON",
+                "AXIOM_ENABLE_VALIDATION": "ON",
+                "AXIOM_ENABLE_HOTRELOAD": "OFF",
+                "AXIOM_ENABLE_LOGGING": "ON"
+            }
+        },
+        {
+            "name": "engine-only-release",
+            "displayName": "Engine Only (Release)",
+            "description": "Build only the engine core in release mode",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build/engine-only-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "AXIOM_BUILD_ENGINE": "ON",
+                "AXIOM_BUILD_EDITOR": "OFF",
+                "AXIOM_BUILD_LAUNCHER": "OFF",
+                "AXIOM_BUILD_RUNTIME": "OFF",
+                "AXIOM_BUILD_EXAMPLES": "OFF",
+                "AXIOM_BUILD_TESTS": "ON",
+                "AXIOM_BUILD_WINDOW_MODULE": "OFF",
+                "AXIOM_BUILD_RENDERING_MODULE": "OFF",
+                "AXIOM_BUILD_AUDIO_MODULE": "OFF",
+                "AXIOM_BUILD_PHYSICS_MODULE": "OFF",
+                "AXIOM_BUILD_SCRIPTING_MODULE": "OFF",
+                "AXIOM_ENABLE_PROFILING": "OFF",
+                "AXIOM_ENABLE_VALIDATION": "OFF",
+                "AXIOM_ENABLE_HOTRELOAD": "OFF",
+                "AXIOM_ENABLE_LOGGING": "ON"
+            }
+        },
+        {
+            "name": "engine-with-window-debug",
+            "displayName": "Engine + Window Module (Debug)",
+            "description": "Build engine with window module in debug mode",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build/engine-with-window-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "AXIOM_BUILD_ENGINE": "ON",
+                "AXIOM_BUILD_EDITOR": "OFF",
+                "AXIOM_BUILD_LAUNCHER": "OFF",
+                "AXIOM_BUILD_RUNTIME": "OFF",
+                "AXIOM_BUILD_EXAMPLES": "ON",
+                "AXIOM_BUILD_TESTS": "ON",
+                "AXIOM_BUILD_WINDOW_MODULE": "ON",
+                "AXIOM_BUILD_RENDERING_MODULE": "OFF",
+                "AXIOM_BUILD_AUDIO_MODULE": "OFF",
+                "AXIOM_BUILD_PHYSICS_MODULE": "OFF",
+                "AXIOM_BUILD_SCRIPTING_MODULE": "OFF",
+                "AXIOM_WINDOW_BACKEND_GLFW": "ON",
+                "AXIOM_WINDOW_BACKEND_SDL2": "OFF",
+                "AXIOM_ENABLE_PROFILING": "ON",
+                "AXIOM_ENABLE_VALIDATION": "ON",
+                "AXIOM_ENABLE_LOGGING": "ON"
+            }
+        },
+        {
+            "name": "engine-with-window-release",
+            "displayName": "Engine + Window Module (Release)",
+            "description": "Build engine with window module in release mode",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build/engine-with-window-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "AXIOM_BUILD_ENGINE": "ON",
+                "AXIOM_BUILD_EDITOR": "OFF",
+                "AXIOM_BUILD_LAUNCHER": "OFF",
+                "AXIOM_BUILD_RUNTIME": "OFF",
+                "AXIOM_BUILD_EXAMPLES": "ON",
+                "AXIOM_BUILD_TESTS": "ON",
+                "AXIOM_BUILD_WINDOW_MODULE": "ON",
+                "AXIOM_BUILD_RENDERING_MODULE": "OFF",
+                "AXIOM_BUILD_AUDIO_MODULE": "OFF",
+                "AXIOM_BUILD_PHYSICS_MODULE": "OFF",
+                "AXIOM_BUILD_SCRIPTING_MODULE": "OFF",
+                "AXIOM_WINDOW_BACKEND_GLFW": "ON",
+                "AXIOM_WINDOW_BACKEND_SDL2": "OFF",
+                "AXIOM_ENABLE_PROFILING": "OFF",
+                "AXIOM_ENABLE_VALIDATION": "OFF",
+                "AXIOM_ENABLE_LOGGING": "ON"
+            }
+        },
+        {
+            "name": "minimal",
+            "displayName": "Minimal Build",
+            "description": "Minimal build with only engine core, no modules",
+            "inherits": "default",
+            "binaryDir": "${sourceDir}/build/minimal",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "AXIOM_BUILD_ENGINE": "ON",
+                "AXIOM_BUILD_EDITOR": "OFF",
+                "AXIOM_BUILD_LAUNCHER": "OFF",
+                "AXIOM_BUILD_RUNTIME": "OFF",
+                "AXIOM_BUILD_EXAMPLES": "OFF",
+                "AXIOM_BUILD_TESTS": "OFF",
+                "AXIOM_BUILD_WINDOW_MODULE": "OFF",
+                "AXIOM_BUILD_RENDERING_MODULE": "OFF",
+                "AXIOM_BUILD_AUDIO_MODULE": "OFF",
+                "AXIOM_BUILD_PHYSICS_MODULE": "OFF",
+                "AXIOM_BUILD_SCRIPTING_MODULE": "OFF",
+                "AXIOM_ENABLE_PROFILING": "OFF",
+                "AXIOM_ENABLE_VALIDATION": "OFF",
+                "AXIOM_ENABLE_HOTRELOAD": "OFF",
+                "AXIOM_ENABLE_LOGGING": "ON"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "full-debug",
+            "displayName": "Full Debug Build",
+            "configurePreset": "full-debug",
+            "inheritConfigureEnvironment": true
+        },
+        {
+            "name": "full-release",
+            "displayName": "Full Release Build",
+            "configurePreset": "full-release",
+            "inheritConfigureEnvironment": true
+        },
+        {
+            "name": "editor-only-debug",
+            "displayName": "Editor Only Debug Build",
+            "configurePreset": "editor-only-debug",
+            "inheritConfigureEnvironment": true
+        },
+        {
+            "name": "editor-only-release",
+            "displayName": "Editor Only Release Build",
+            "configurePreset": "editor-only-release",
+            "inheritConfigureEnvironment": true
+        },
+        {
+            "name": "engine-only-debug",
+            "displayName": "Engine Only Debug Build",
+            "configurePreset": "engine-only-debug",
+            "inheritConfigureEnvironment": true
+        },
+        {
+            "name": "engine-only-release",
+            "displayName": "Engine Only Release Build",
+            "configurePreset": "engine-only-release",
+            "inheritConfigureEnvironment": true
+        },
+        {
+            "name": "engine-with-window-debug",
+            "displayName": "Engine + Window Debug Build",
+            "configurePreset": "engine-with-window-debug",
+            "inheritConfigureEnvironment": true
+        },
+        {
+            "name": "engine-with-window-release",
+            "displayName": "Engine + Window Release Build",
+            "configurePreset": "engine-with-window-release",
+            "inheritConfigureEnvironment": true
+        },
+        {
+            "name": "minimal",
+            "displayName": "Minimal Build",
+            "configurePreset": "minimal",
+            "inheritConfigureEnvironment": true
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "full-debug",
+            "configurePreset": "full-debug",
+            "output": {
+                "outputOnFailure": true,
+                "verbosity": "verbose"
+            },
+            "execution": {
+                "stopOnFailure": false
+            }
+        },
+        {
+            "name": "engine-only",
+            "configurePreset": "engine-only-debug",
+            "output": {
+                "outputOnFailure": true,
+                "verbosity": "verbose"
+            },
+            "execution": {
+                "stopOnFailure": false
+            }
+        }
+    ]
+}
