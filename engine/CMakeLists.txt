@@ -20,3 +20,5 @@ target_include_directories(axiom_engine PUBLIC
 target_link_libraries(axiom_engine PUBLIC
     flecs::flecs
 )
+
+axiom_enable_strict_warnings(axiom_engine)

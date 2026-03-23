@@ -16,3 +16,5 @@ target_link_libraries(axiom_editor PUBLIC
     axiom_engine
     axiom_window_glfw_module
 )
+
+axiom_enable_strict_warnings(axiom_editor)

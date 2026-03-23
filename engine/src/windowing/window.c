@@ -9,7 +9,7 @@ struct axiom_window
     void *handle;
     int width;
     int height;
-    char title;
+    char *title;
 };
 
 struct axiom_window_api
@@ -27,7 +27,7 @@ axiom_window_api *axiom_create_window_api(const char *name,
                                           AXIOM_WINDOW_API_TERMINATE_FUNCTION terminate,
                                           AxisError *err)
 {
-    if (!name)
+    if (!name || !init | !create_window | !destroy_window | !terminate)
     {
         *err = AXIOM_EINVALID;
         return NULL;
@@ -75,6 +75,89 @@ void axiom_destroy_window_api(axiom_window_api **api, AxisError *err)
     *api = NULL;
 }
 
+axiom_window *create_window(int width, int height, const char *title, void *handle, AxisError *err)
+{
+    if (!title)
+    {
+        *err = AXIOM_EINVALID;
+        return NULL;
+    }
+
+    axiom_window *window = (axiom_window *)malloc(sizeof(axiom_window));
+    if (!window)
+    {
+        *err = AXIOM_ENOMEM;
+        return NULL;
+    }
+
+    window->title = (char *)malloc(strlen(title) + 1);
+    if (!window->title)
+    {
+        free(window);
+        *err = AXIOM_ENOMEM;
+        return NULL;
+    }
+    strcpy(window->title, title);
+
+    window->width = width;
+    window->height = height;
+    window->handle = handle;
+
+    *err = AXIOM_SUCCESS;
+    return window;
+}
+
+void destroy_window(axiom_window **window, AxisError *err)
+{
+    if (!window || !(*window))
+    {
+        *err = AXIOM_EINVALID;
+        return;
+    }
+
+    if ((*window)->title)
+    {
+        free((*window)->title);
+    }
+
+    free(*window);
+    *window = NULL;
+}
+
+void axiom_init_window_api(axiom_window_api *api, AxisError *err)
+{
+    if (!api)
+    {
+        *err = AXIOM_EINVALID;
+        return;
+    }
+
+    axoim_validate_axiom_window_api(api, err);
+    if ((*err) != AXIOM_SUCCESS)
+    {
+        return;
+    }
+
+    api->init(err);
+}
+
+void axiom_terminate_window_api(axiom_window_api *api, AxisError *err)
+{
+    if (!api)
+    {
+        *err = AXIOM_EINVALID;
+        return;
+    }
+
+    axoim_validate_axiom_window_api(api, err);
+    if ((*err) != AXIOM_SUCCESS)
+    {
+        return;
+    }
+
+    api->terminate(err);
+}
+
 axiom_window *axiom_create_window(axiom_window_api *api, int width, int height, char *title, AxisError *err)
 {
     if (!api)
@@ -83,7 +166,13 @@ axiom_window *axiom_create_window(axiom_window_api *api, int width, int height, 
         return NULL;
     }
 
-    axiom_window *window = api->create_window(width, height, title);
+    axoim_validate_axiom_window_api(api, err);
+    if ((*err) != AXIOM_SUCCESS)
+    {
+        return NULL;
+    }
+
+    axiom_window *window = api->create_window(width, height, title, err);
     if (!window)
     {
         *err = AXIOM_WINDOW_ECREATE;
@@ -102,12 +191,12 @@ void axiom_destroy_window(axiom_window_api *api, axiom_window **window, AxisErro
     }
 
     axoim_validate_axiom_window_api(api, err);
-    if (err != AXIOM_SUCCESS)
+    if ((*err) != AXIOM_SUCCESS)
     {
         return;
     }
 
-    api->destroy_window(window);
+    api->destroy_window(window, err);
     if ((*window))
         *err = AXIOM_WINDOW_EDESTROY;
     return;

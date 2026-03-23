@@ -7,18 +7,11 @@ int main()
 {
     AxisError err;
     axiom_window_api *api = axiom_create_glfw_window_api(&err);
-    if (err != AXIOM_SUCCESS)
-    {
-        axiom_perror("WINDOW API NOT INIT", err);
-        return EXIT_FAILURE;
-    }
 
-    axiom_create_window(api, 800, 600, "test", &err);
-    if (err != AXIOM_SUCCESS)
-    {
-        axiom_perror("WINDOW API NOT INIT", err);
-        return EXIT_FAILURE;
-    }
+    AXIOM_CALL(axiom_init_window_api(api, &err), "WINDOW API NOT INITIALIZED");
+    AXIOM_CALL(axiom_create_window(api, 800, 600, "test", &err), "WINDOW CREATION FAILED");
+    AXIOM_CALL(axiom_terminate_window_api(api, &err), "COULD NOT TERMINATE");
+    AXIOM_CALL(axiom_destroy_window_api(&api, &err), "COULD NOT DESTROY WINDOW API");
 
     return EXIT_SUCCESS;
 }
